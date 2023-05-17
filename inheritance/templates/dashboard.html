@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}User Dashboard{% endblock %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Include the sidebar template -->
+    <div class="sidebar">
+        {% include 'dash.html' %}
+    </div>
+
+    <div class="content">
+      <div class="container">
+
+        <div class="custom-scrollbar" style="height: 630px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Temperature</th>
+                        <th>Humididty</th>
+                        <th>CO2</th>
+                        <th>CO</th>
+                        <th>NO2</th>
+                        <th>SO2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for user in users %}
+              <tr>
+                <td>{{ user.name }}</td>
+                {% if user.latest_entry %}
+                <td>{{ user.latest_entry.Temperature }}</td>
+                <td>{{ user.latest_entry.Humidity }}</td>
+                <td>{{ user.latest_entry.CO2  }}</td>
+                <td>{{ user.latest_entry.CO  }}</td>
+                <td>{{  user.latest_entry.NO2  }}</td>
+                <td>{{ user.latest_entry.SO2 }}</td>
+            
+                {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+              
+                </tbody>
+            </table>
+        </div>
+    </div>
+          
+    </div>
+</div>
+{% endblock %}

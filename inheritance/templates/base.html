@@ -1,0 +1,25 @@
+
+<html>
+<head>
+   {% load static %}
+  <title>{% block title %}Default Title{% endblock %}</title>
+  {% block css %}
+  {% endblock %}
+  
+  
+
+  <!-- Head scripts block for individual pages -->
+
+</head>
+<body>
+  <!-- Include the sidebar template -->
+
+  {% block content %}
+  {% endblock %}
+  
+    {% block scripts %}
+    {% endblock %}
+
+
+</body>
+</html>

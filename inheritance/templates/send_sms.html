@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Notification{% endblock %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/notification.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="alert-container">
+
+  <div class="sidebar">
+    {% include 'dash.html' %}
+  </div>
+
+  <div class="content">
+
+    <section id="contactsection">
+      <div class="form-container">
+        <form method="post" action="{% url 'send_sms' %}">
+          {% csrf_token %}
+          <label for="name">Name:</label>
+          <input type="text" name="user_name" placeholder="Enter user name">
+          <label for="message">Message:</label>
+          <textarea class="textarea-field" name="message" placeholder="Enter message" required></textarea>
+          <button type="submit">Send Notification</button>
+        </form>
+        {% if success_message %}
+        <p class="message">{{ success_message }}</p>
+        {% endif %}
+
+        {% if error_message %}
+        <p class="message">{{ error_message }}</p>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

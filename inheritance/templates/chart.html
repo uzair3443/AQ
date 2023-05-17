@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Data chart{% endblock %}
+{% load static %}
+{% block css %}
+
+{% endblock %}
+
+
+{% block content %}
+<h1>User Data</h1>
+<canvas id="progressChart" width="400" height="200"></canvas>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Get user data from Django context
+    var usersData = JSON.parse('{{ users|safe }}');
+
+    // Prepare data for the progress chart
+    var chartData = {
+        labels: ['Temperature', 'Humidity', 'CO2', 'CO', 'NO2', 'SO2'],
+        datasets: []
+    };
+
+    // Add data for each user
+    usersData.forEach(function (user) {
+        var userData = {
+            label: user.name,
+            data: [
+                user.temperature,
+                user.humidity,
+                user.co2,
+                user.co,
+                user.no2,
+                user.so2
+            ],
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        };
+
+        chartData.datasets.push(userData);
+    });
+
+    // Render the progress chart
+    var ctx = document.getElementById('progressChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'horizontalBar',
+        data: chartData,
+        options: {
+            scales: {
+                x: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
